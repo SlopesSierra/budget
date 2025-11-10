@@ -1,17 +1,15 @@
-FROM node:18-alpine
-
+# Step 1: Build the app
+FROM node:18-alpine AS build
 WORKDIR /app
-
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy app files
 COPY . .
+RUN npm run build
 
+# Step 2: Serve the static files
+FROM node:18-alpine
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=build /app/dist ./dist
 EXPOSE 3000
-
-# Use serve to host the static files
-CMD ["npx", "serve", "-s", ".", "-l", "3000"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
