@@ -4,9 +4,13 @@
   "description": "Personal Budget Tracker",
   "private": true,
   "scripts": {
-    "start": "serve -s . -l 3000"
+    "start": "serve -s dist -l 3000",
+    "build": "npx parcel build public/index.html --dist-dir dist"
   },
   "dependencies": {
     "serve": "^14.2.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0"
   }
 }
