@@ -4,7 +4,7 @@ services:
   budget-tracker:
     build: .
     ports:
-      - "3000:3000"
+      - "6623:3000"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
