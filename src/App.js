@@ -10,6 +10,15 @@ const App = () => {
   const [creditCards, setCreditCards] = useState([]);
   const [loans, setLoans] = useState([]);
 
+  const today = new Date();
+  const saved = localStorage.getItem('selectedMonth');
+  const savedDate = saved ? new Date(saved) : null;
+  const initialDate =
+    savedDate && savedDate.getMonth() === today.getMonth() && savedDate.getFullYear() === today.getFullYear()
+      ? savedDate
+      : today;
+  const [date, setDate] = useState(() => initialDate);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -140,6 +149,10 @@ const App = () => {
       categories[cat] = (categories[cat] || 0) + parseFloat(exp.amount || 0);
     });
     return Object.entries(categories).map(([name, value]) => ({ name, value }));
+  };
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
   };
 
   return (
